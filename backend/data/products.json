@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1764480475383",
+    "name": "1",
+    "description": "unoo",
+    "price": 1234,
+    "image": "/uploads/1764480475365.jpeg"
+  },
+  {
+    "id": "1764480493079",
+    "name": "2",
+    "description": "doos",
+    "price": 123,
+    "image": "/uploads/1764480493068.jpeg"
+  },
+  {
+    "id": "1764480521008",
+    "name": "3",
+    "description": "el tres",
+    "price": 123145,
+    "image": "/uploads/1764480520990.jpeg"
+  },
+  {
+    "id": "1764481247175",
+    "name": "logo",
+    "description": "",
+    "price": 1,
+    "image": "/uploads/1764481247165.jpeg"
+  }
+]
