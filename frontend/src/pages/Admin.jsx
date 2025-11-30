@@ -5,7 +5,7 @@ import './Admin.css';
 const Admin = () => {
     const [products, setProducts] = useState([]);
     const [formData, setFormData] = useState({
-        name: '',
+        type: '',
         description: '',
         price: '',
         uploadedBy: '',
@@ -42,7 +42,7 @@ const Admin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData();
-        data.append('name', formData.name);
+        data.append('type', formData.type);
         data.append('description', formData.description);
         data.append('price', formData.price);
         data.append('uploadedBy', formData.uploadedBy);
@@ -58,7 +58,7 @@ const Admin = () => {
             });
             if (res.ok) {
                 fetchProducts();
-                setFormData({ name: '', description: '', price: '', uploadedBy: '', image: null });
+                setFormData({ type: '', description: '', price: '', uploadedBy: '', image: null });
                 document.getElementById('imageInput').value = '';
             } else {
                 alert('Error al agregar producto');
@@ -99,15 +99,15 @@ const Admin = () => {
                 <h3 className="admin-form-title">Agregar Nuevo Producto</h3>
                 <form onSubmit={handleSubmit} className="admin-form">
                     <div className="form-group">
-                        <label className="form-label">Nombre</label>
+                        <label className="form-label">Tipo de Producto</label>
                         <input
                             type="text"
-                            name="name"
+                            name="type"
                             className="form-input"
-                            value={formData.name}
+                            value={formData.type}
                             onChange={handleInputChange}
                             required
-                            placeholder="Ej: Collar Ojo Turco"
+                            placeholder="Ej: Collar, Anillo, Pulsera"
                         />
                     </div>
 
@@ -181,11 +181,11 @@ const Admin = () => {
                             <div key={product.id} className="admin-product-card">
                                 <img
                                     src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/300'}
-                                    alt={product.name}
+                                    alt={product.type || product.name}
                                     className="admin-product-image"
                                 />
                                 <div className="admin-product-info">
-                                    <h4 className="admin-product-name">{product.name}</h4>
+                                    <h4 className="admin-product-name">{product.type || product.name} #{product.id}</h4>
                                     <p className="admin-product-price">${product.price.toFixed(2)}</p>
                                     {product.uploadedBy && (
                                         <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>

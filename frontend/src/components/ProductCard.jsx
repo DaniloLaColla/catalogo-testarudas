@@ -12,10 +12,10 @@ const ProductCard = ({ product }) => {
     return (
         <Link to={`/product/${product.id}`} className="product-card" style={{ textDecoration: 'none' }}>
             <div className="product-image-container">
-                <img src={imageUrl} alt={product.name} className="product-image" />
+                <img src={imageUrl} alt={product.type || product.name} className="product-image" />
             </div>
             <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
+                <h3 className="product-name">{product.type || product.name}</h3>
                 <p className="product-price">${product.price.toFixed(2)}</p>
                 <p className="product-description">{product.description}</p>
             </div>

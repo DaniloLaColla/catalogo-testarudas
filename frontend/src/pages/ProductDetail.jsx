@@ -38,7 +38,7 @@ const ProductDetail = () => {
                 </div>
 
                 <div className="product-detail-info">
-                    <h1 className="product-detail-title">{product.name}</h1>
+                    <h1 className="product-detail-title">{product.type || product.name}</h1>
                     <p className="product-detail-price">
                         ${product.price.toFixed(2)}
                     </p>
@@ -49,7 +49,7 @@ const ProductDetail = () => {
                         </p>
                     </div>
                     <a
-                        href={`https://wa.me/5492984654991?text=Hola! Me interesa el producto "${product.name}" que vi en el catálogo: ${window.location.href}`}
+                        href={`https://wa.me/5492984654991?text=Hola! Me interesa el producto "${product.type || product.name}" (ID: ${product.id}) que vi en el catálogo: ${window.location.href}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-primary btn-whatsapp"

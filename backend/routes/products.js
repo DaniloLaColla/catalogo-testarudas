@@ -27,18 +27,28 @@ router.get('/:id', (req, res) => {
 
 // POST new product (Admin only - simplified auth for now)
 router.post('/', upload.single('image'), (req, res) => {
-  const { name, description, price, uploadedBy } = req.body;
+  const { type, description, price, uploadedBy } = req.body;
 
-
-
-  if (!name || !price || !req.file || !uploadedBy) {
-    return res.status(400).json({ message: 'Name, price, image, and uploadedBy are required' });
+  if (!type || !price || !req.file || !uploadedBy) {
+    return res.status(400).json({ message: 'Type, price, image, and uploadedBy are required' });
   }
 
   const products = readProducts();
+
+  // Generate sequential ID
+  let nextId = 1;
+  if (products.length > 0) {
+    // Filter out legacy timestamp IDs (assuming they are large numbers) if mixed data exists
+    // Or just find the max ID that is a simple number
+    const ids = products.map(p => parseInt(p.id)).filter(id => !isNaN(id) && id < 1000000000000);
+    if (ids.length > 0) {
+      nextId = Math.max(...ids) + 1;
+    }
+  }
+
   const newProduct = {
-    id: Date.now(),
-    name,
+    id: nextId.toString(),
+    type,
     description,
     price: parseFloat(price),
     uploadedBy,
