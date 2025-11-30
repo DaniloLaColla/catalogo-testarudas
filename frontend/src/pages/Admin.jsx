@@ -23,7 +23,8 @@ const Admin = () => {
     }, [navigate]);
 
     const fetchProducts = () => {
-        fetch('http://localhost:5000/api/products')
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        fetch(`${apiUrl}/api/products`)
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error(err));
@@ -50,7 +51,8 @@ const Admin = () => {
         }
 
         try {
-            const res = await fetch('http://localhost:5000/api/products', {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${apiUrl}/api/products`, {
                 method: 'POST',
                 body: data
             });
@@ -69,7 +71,8 @@ const Admin = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('¿Estás seguro de que querés eliminar este producto?')) return;
         try {
-            const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${apiUrl}/api/products/${id}`, {
                 method: 'DELETE'
             });
             if (res.ok) {
@@ -177,7 +180,7 @@ const Admin = () => {
                         {products.map(product => (
                             <div key={product.id} className="admin-product-card">
                                 <img
-                                    src={product.image ? `http://localhost:5000${product.image}` : 'https://via.placeholder.com/300'}
+                                    src={product.image ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}` : 'https://via.placeholder.com/300'}
                                     alt={product.name}
                                     className="admin-product-image"
                                 />
