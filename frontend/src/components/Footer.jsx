@@ -7,6 +7,9 @@ const Footer = () => {
         <footer className="footer">
             <div className="container footer-content">
                 <p>&copy; {new Date().getFullYear()} Testarudas Accesorios. Todos los derechos reservados.</p>
+                <a href="https://www.instagram.com/testarudas.accesorios/" target="_blank" rel="noopener noreferrer" className="footer-instagram-link">
+                    Seguinos en Instagram
+                </a>
                 <Link to="/login" className="footer-admin-link" title="Admin Access">
                     Administrar
                 </Link>

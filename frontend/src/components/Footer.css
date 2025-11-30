@@ -25,3 +25,16 @@
 .footer-admin-link:hover {
     color: var(--color-primary);
 }
+
+.footer-instagram-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-instagram-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
