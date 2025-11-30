@@ -9,7 +9,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         // Simple hardcoded password for MVP
-        if (password === 'admin123') {
+        if (password === 'Imparables22') {
             localStorage.setItem('isAdmin', 'true');
             navigate('/admin');
         } else {
