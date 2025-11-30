@@ -48,9 +48,15 @@ const ProductDetail = () => {
                             {product.description}
                         </p>
                     </div>
-                    <button className="btn btn-primary btn-whatsapp">
+                    <a
+                        href={`https://wa.me/549298465991?text=Hola! Me interesa el producto "${product.name}" que vi en el catálogo.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-primary btn-whatsapp"
+                        style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}
+                    >
                         Consultar por WhatsApp
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
