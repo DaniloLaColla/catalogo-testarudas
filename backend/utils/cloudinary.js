@@ -14,6 +14,7 @@ const storage = new CloudinaryStorage({
     params: {
         folder: 'catalogo-testarudas',
         allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+        transformation: [{ width: 1000, crop: 'limit' }, { quality: 'auto' }, { fetch_format: 'auto' }],
     },
 });
 

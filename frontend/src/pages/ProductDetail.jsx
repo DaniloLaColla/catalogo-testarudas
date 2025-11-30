@@ -31,7 +31,7 @@ const ProductDetail = () => {
             <div className="product-detail-content">
                 <div className="product-detail-image-wrapper">
                     <img
-                        src={product.image ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}` : 'https://via.placeholder.com/500'}
+                        src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/500'}
                         alt={product.name}
                         className="product-detail-image"
                     />

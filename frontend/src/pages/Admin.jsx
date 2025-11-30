@@ -180,7 +180,7 @@ const Admin = () => {
                         {products.map(product => (
                             <div key={product.id} className="admin-product-card">
                                 <img
-                                    src={product.image ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}` : 'https://via.placeholder.com/300'}
+                                    src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/300'}
                                     alt={product.name}
                                     className="admin-product-image"
                                 />
