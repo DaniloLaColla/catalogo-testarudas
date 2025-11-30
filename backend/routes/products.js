@@ -4,22 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { readProducts, writeProducts } = require('../utils/db');
-
-// Configure Multer for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = 'uploads/';
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir);
-    }
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ storage: storage });
+const { upload } = require('../utils/cloudinary');
 
 // GET all products
 router.get('/', (req, res) => {
@@ -43,7 +28,8 @@ router.get('/:id', (req, res) => {
 // POST new product (Admin only - simplified auth for now)
 router.post('/', upload.single('image'), (req, res) => {
   const { name, description, price, uploadedBy } = req.body;
-  const image = req.file ? `/uploads/${req.file.filename}` : '';
+
+
 
   if (!name || !price || !req.file || !uploadedBy) {
     return res.status(400).json({ message: 'Name, price, image, and uploadedBy are required' });
@@ -51,12 +37,12 @@ router.post('/', upload.single('image'), (req, res) => {
 
   const products = readProducts();
   const newProduct = {
-    id: Date.now().toString(),
+    id: Date.now(),
     name,
     description,
     price: parseFloat(price),
     uploadedBy,
-    image
+    image: req.file ? req.file.path : '' // Cloudinary returns the full URL in path
   };
 
   products.push(newProduct);
@@ -75,14 +61,11 @@ router.delete('/:id', (req, res) => {
     return res.status(404).json({ message: 'Product not found' });
   }
 
-  // Optional: Delete image file
-  const product = products[productIndex];
-  if (product.image) {
-    const imagePath = path.join(__dirname, '..', product.image);
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
-  }
+  // Optional: Delete image from Cloudinary (TODO)
+  // const product = products[productIndex];
+  // if (product.image) {
+  //   // Logic to delete from Cloudinary would go here
+  // }
 
   products = products.filter(p => p.id !== id);
   writeProducts(products);
