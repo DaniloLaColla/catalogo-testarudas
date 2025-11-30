@@ -4,6 +4,13 @@
     margin: 0 auto;
 }
 
+.btn-back {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
 .product-detail-content {
     display: grid;
     grid-template-columns: 1fr;

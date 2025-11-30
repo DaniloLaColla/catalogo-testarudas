@@ -26,7 +26,7 @@ const ProductDetail = () => {
 
     return (
         <div className="product-detail-container">
-            <Link to="/" className="btn btn-outline" style={{ marginBottom: '2rem', display: 'inline-block' }}>&larr; Volver al Catálogo</Link>
+            <Link to="/" className="btn btn-outline btn-back">&larr; Volver al Catálogo</Link>
 
             <div className="product-detail-content">
                 <div className="product-detail-image-wrapper">
