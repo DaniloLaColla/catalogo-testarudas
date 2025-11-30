@@ -24,6 +24,7 @@ const Navbar = () => {
             <div className="container navbar-content">
                 <Link to="/" className="navbar-logo">
                     <img src="/logo.jpg" alt="Testarudas" style={{ height: '50px' }} />
+                    <span>Testarudas</span>
                 </Link>
                 <div className="navbar-toggle" onClick={toggleMenu}>
                     <span className="bar"></span>
@@ -32,10 +33,8 @@ const Navbar = () => {
                 </div>
                 <ul className={`navbar-links ${isOpen ? 'active' : ''}`}>
                     <li><Link to="/" onClick={toggleMenu}>Catálogo</Link></li>
-                    {location.pathname === '/admin' ? (
+                    {location.pathname === '/admin' && (
                         <li><button onClick={handleLogout} className="btn-link" style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer', color: 'var(--color-text)' }}>Cerrar Sesión</button></li>
-                    ) : (
-                        <li><Link to="/admin" onClick={toggleMenu}>Admin</Link></li>
                     )}
                 </ul>
             </div>

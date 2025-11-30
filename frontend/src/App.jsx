@@ -6,6 +6,8 @@ import Admin from './pages/Admin';
 import Login from './pages/Login';
 import ProductDetail from './pages/ProductDetail';
 
+import Footer from './components/Footer';
+
 function App() {
   return (
     <div className="App">
@@ -16,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

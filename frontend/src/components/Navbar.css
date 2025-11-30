@@ -17,8 +17,12 @@
     font-family: var(--font-heading);
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-secondary);
+    color: var(--color-primary);
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
 }
 
 .navbar-links {
@@ -28,10 +32,12 @@
 }
 
 .navbar-links a {
-    font-weight: 500;
+    font-family: var(--font-heading);
+    font-weight: 700;
     color: var(--color-text);
     transition: color 0.3s ease;
     text-decoration: none;
+    font-size: 1.1rem;
 }
 
 .navbar-links a:hover {
