@@ -29,7 +29,7 @@ const Home = () => {
             {/* Scrollable Content */}
             <div className="home-content">
                 <header className="home-header">
-                    <h1 className="home-title">TESTARUDAS</h1>
+                    <h1 className="home-title">Testarudas</h1>
                     <p className="home-tagline">
                         Somos Testarudas, creamos accesorios con actitud, color y brillo para mujeres que se animan a resaltar.
                     </p>

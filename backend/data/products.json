@@ -19,12 +19,5 @@
     "description": "el tres",
     "price": 123145,
     "image": "/uploads/1764480520990.jpeg"
-  },
-  {
-    "id": "1764481247175",
-    "name": "logo",
-    "description": "",
-    "price": 1,
-    "image": "/uploads/1764481247165.jpeg"
   }
 ]
