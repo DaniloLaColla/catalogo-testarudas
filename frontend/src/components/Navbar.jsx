@@ -23,7 +23,7 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="container navbar-content">
                 <Link to="/" className="navbar-logo">
-                    <img src="/logo.jpg" alt="Testarudas" style={{ height: '50px' }} />
+                    <img src="/logo.png" alt="Testarudas" style={{ height: '50px' }} />
                     <span>Testarudas</span>
                 </Link>
                 <div className="navbar-toggle" onClick={toggleMenu}>
