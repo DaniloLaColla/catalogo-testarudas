@@ -7,7 +7,8 @@
   --color-secondary: #58C7F3;
   /* Turquoise/Light Blue */
   --color-accent: #D4AF37;
-  /* Gold accents */
+  --color-brand-pink: #D1208A;
+  /* Testarudas Logo Pink */
 
   --color-background: #FFFFFF;
   --color-surface: #F4F8FB;
@@ -106,14 +107,14 @@ img {
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
+  background-color: var(--color-brand-pink);
   color: var(--color-white);
 }
 
 .btn-primary:hover {
-  background-color: #152b6b;
+  background-color: #a0186a;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(28, 57, 142, 0.3);
+  box-shadow: 0 4px 12px rgba(209, 32, 138, 0.3);
 }
 
 .btn-outline {
@@ -161,5 +162,5 @@ img {
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--color-secondary);
+  border-color: var(--color-brand-pink);
 }

@@ -34,20 +34,6 @@
 .navbar-links a {
     font-family: var(--font-heading);
     font-weight: 700;
-    color: var(--color-text);
-    transition: color 0.3s ease;
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
-.navbar-links a:hover {
-    color: var(--color-primary);
-}
-
-.navbar-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
 }
 
 .bar {
