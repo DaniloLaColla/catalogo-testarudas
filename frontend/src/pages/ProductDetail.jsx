@@ -48,6 +48,9 @@ const ProductDetail = () => {
                     <p className="product-detail-price">
                         ${product.price.toFixed(2)}
                     </p>
+                    <p className="product-detail-id" style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                        id = {product.numericId || product.id}
+                    </p>
                     <div className="product-detail-description-card">
                         <h3 className="product-detail-description-title">Descripción</h3>
                         <p className="product-detail-description-text">
