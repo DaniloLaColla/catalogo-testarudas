@@ -4,6 +4,7 @@ import './Admin.css';
 
 const Admin = () => {
     const [products, setProducts] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         type: '',
         description: '',
@@ -48,6 +49,9 @@ const Admin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
         const data = new FormData();
         data.append('type', formData.type);
         data.append('description', formData.description);
@@ -73,6 +77,8 @@ const Admin = () => {
             }
         } catch (err) {
             console.error(err);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -171,8 +177,13 @@ const Admin = () => {
                     </div>
 
                     <div className="form-full-width">
-                        <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem' }}>
-                            Agregar Producto
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            style={{ width: '100%', padding: '1rem', opacity: isSubmitting ? 0.7 : 1 }}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Cargando...' : 'Agregar Producto'}
                         </button>
                     </div>
                 </form>

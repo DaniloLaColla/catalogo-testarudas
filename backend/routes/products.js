@@ -17,9 +17,17 @@ router.get('/', async (req, res) => {
 // GET single product
 router.get('/:id', async (req, res) => {
   try {
-    console.log('Fetching product with numericId:', req.params.id);
-    const product = await Product.findOne({ numericId: parseInt(req.params.id) });
-    console.log('Found product:', product ? product.numericId : 'None');
+    let product;
+    const isObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
+
+    if (isObjectId) {
+      product = await Product.findById(req.params.id);
+    }
+
+    if (!product) {
+      product = await Product.findOne({ numericId: parseInt(req.params.id) });
+    }
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -77,7 +85,17 @@ router.post('/', upload.single('image'), async (req, res) => {
 // DELETE product
 router.delete('/:id', async (req, res) => {
   try {
-    const product = await Product.findOne({ numericId: parseInt(req.params.id) });
+    let product;
+    const isObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
+
+    if (isObjectId) {
+      product = await Product.findById(req.params.id);
+    }
+
+    if (!product) {
+      product = await Product.findOne({ numericId: parseInt(req.params.id) });
+    }
+
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
