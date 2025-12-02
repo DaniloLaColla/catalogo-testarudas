@@ -19,7 +19,7 @@ const Login = () => {
 
     return (
         <div className="container" style={{ maxWidth: '400px', marginTop: '4rem' }}>
-            <h2 style={{ textAlign: 'center' }}>Acceso Admin</h2>
+            <h2 style={{ textAlign: 'center' }}>Acceso Administradoras 👑</h2>
             <form onSubmit={handleLogin} style={{ marginTop: '2rem' }}>
                 <div className="form-group">
                     <label className="form-label">Contraseña</label>
