@@ -29,8 +29,18 @@ router.get('/:id', (req, res) => {
 router.post('/', upload.single('image'), (req, res) => {
   const { type, description, price, uploadedBy } = req.body;
 
+  console.log('Received product upload request');
+  console.log('Body:', req.body);
+  console.log('File:', req.file);
+
   if (!type || !price || !req.file || !uploadedBy) {
-    return res.status(400).json({ message: 'Type, price, image, and uploadedBy are required' });
+    const missing = [];
+    if (!type) missing.push('type');
+    if (!price) missing.push('price');
+    if (!req.file) missing.push('image');
+    if (!uploadedBy) missing.push('uploadedBy');
+    console.error('Missing fields:', missing);
+    return res.status(400).json({ message: `Missing required fields: ${missing.join(', ')}` });
   }
 
   const products = readProducts();
