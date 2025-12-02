@@ -27,6 +27,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+const Counter = require('../models/Counter');
+
 // POST new product
 router.post('/', upload.single('image'), async (req, res) => {
   const { type, description, price, uploadedBy } = req.body;
@@ -45,15 +47,23 @@ router.post('/', upload.single('image'), async (req, res) => {
     return res.status(400).json({ message: `Missing required fields: ${missing.join(', ')}` });
   }
 
-  const product = new Product({
-    type,
-    description,
-    price: parseFloat(price),
-    uploadedBy,
-    image: req.file.path
-  });
-
   try {
+    // Get next sequence number
+    const counter = await Counter.findByIdAndUpdate(
+      { _id: 'productId' },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+
+    const product = new Product({
+      type,
+      description,
+      price: parseFloat(price),
+      uploadedBy,
+      image: req.file.path,
+      numericId: counter.seq
+    });
+
     const newProduct = await product.save();
     res.status(201).json(newProduct);
   } catch (err) {

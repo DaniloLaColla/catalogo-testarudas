@@ -21,15 +21,19 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    numericId: {
+        type: Number,
+        unique: true,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
     },
 });
 
-// Add a virtual 'id' field that maps to '_id' for frontend compatibility
+// Add a virtual 'id' field that maps to 'numericId' for frontend compatibility
 productSchema.virtual('id').get(function () {
-    return this._id.toHexString();
+    return this.numericId;
 });
 
 // Ensure virtual fields are serialized
