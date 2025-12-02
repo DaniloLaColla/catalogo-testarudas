@@ -193,7 +193,7 @@ const Admin = () => {
                                     className="admin-product-image"
                                 />
                                 <div className="admin-product-info">
-                                    <h4 className="admin-product-name">{product.type || product.name} #{product.id}</h4>
+                                    <h4 className="admin-product-name">{product.type || product.name} #{product.numericId || product.id}</h4>
                                     <p className="admin-product-price">${product.price.toFixed(2)}</p>
                                     {product.uploadedBy && (
                                         <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
