@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const mongoose = require('mongoose');
+require('dotenv').config();
 const productRoutes = require('./routes/products');
 
 const app = express();
@@ -18,6 +20,15 @@ app.use(express.json());
 
 // Serve uploaded images statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Connect to MongoDB
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB:', err));
+} else {
+  console.warn('MONGODB_URI not found in environment variables');
+}
 
 // Routes
 app.use('/api/products', productRoutes);
