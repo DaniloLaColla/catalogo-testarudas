@@ -26,7 +26,14 @@ const Admin = () => {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
         fetch(`${apiUrl}/api/products`)
             .then(res => res.json())
-            .then(data => setProducts(data))
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setProducts(data);
+                } else {
+                    console.error('API returned non-array:', data);
+                    setProducts([]);
+                }
+            })
             .catch(err => console.error(err));
     };
 
