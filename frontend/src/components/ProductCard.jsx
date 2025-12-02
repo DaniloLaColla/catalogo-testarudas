@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
         : 'https://via.placeholder.com/300x300?text=No+Image';
 
     return (
-        <Link to={`/product/${product.id}`} className="product-card" style={{ textDecoration: 'none' }}>
+        <Link to={`/product/${product.numericId || product.id}`} className="product-card" style={{ textDecoration: 'none' }}>
             <div className="product-image-container">
                 <img src={imageUrl} alt={product.type || product.name} className="product-image" />
             </div>
