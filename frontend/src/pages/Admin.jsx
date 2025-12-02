@@ -60,154 +60,159 @@ const Admin = () => {
                 fetchProducts();
                 setFormData({ type: '', description: '', price: '', uploadedBy: '', image: null });
                 document.getElementById('imageInput').value = '';
-            } else {
-                alert('Error al agregar producto');
+                if (res.ok) {
+                    fetchProducts();
+                    setFormData({ type: '', description: '', price: '', uploadedBy: '', image: null });
+                    document.getElementById('imageInput').value = '';
+                } else {
+                    const errorData = await res.json();
+                    alert(`Error al agregar producto: ${errorData.message || 'Error desconocido'}`);
+                }
+            } catch (err) {
+                console.error(err);
             }
-        } catch (err) {
-            console.error(err);
-        }
-    };
+        };
 
-    const handleDelete = async (id) => {
-        if (!window.confirm('¿Estás seguro de que querés eliminar este producto?')) return;
-        try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            const res = await fetch(`${apiUrl}/api/products/${id}`, {
-                method: 'DELETE'
-            });
-            if (res.ok) {
-                fetchProducts();
+        const handleDelete = async (id) => {
+            if (!window.confirm('¿Estás seguro de que querés eliminar este producto?')) return;
+            try {
+                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+                const res = await fetch(`${apiUrl}/api/products/${id}`, {
+                    method: 'DELETE'
+                });
+                if (res.ok) {
+                    fetchProducts();
+                }
+            } catch (err) {
+                console.error(err);
             }
-        } catch (err) {
-            console.error(err);
-        }
+        };
+
+        const handleLogout = () => {
+            localStorage.removeItem('isAdmin');
+            navigate('/login');
+        };
+
+        return (
+            <div className="admin-container">
+                <div className="admin-header">
+                    <h1 className="admin-title">Panel de Administración</h1>
+                </div>
+
+                {/* Add Product Form Section */}
+                <div className="admin-form-card">
+                    <h3 className="admin-form-title">Agregar Nuevo Producto</h3>
+                    <form onSubmit={handleSubmit} className="admin-form">
+                        <div className="form-group">
+                            <label className="form-label">Tipo de Producto</label>
+                            <input
+                                type="text"
+                                name="type"
+                                className="form-input"
+                                value={formData.type}
+                                onChange={handleInputChange}
+                                required
+                                placeholder="Ej: Collar, Anillo, Pulsera"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Precio</label>
+                            <input
+                                type="number"
+                                name="price"
+                                className="form-input"
+                                value={formData.price}
+                                onChange={handleInputChange}
+                                required
+                                step="0.01"
+                                placeholder="0.00"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Cargado Por</label>
+                            <input
+                                type="text"
+                                name="uploadedBy"
+                                className="form-input"
+                                value={formData.uploadedBy}
+                                onChange={handleInputChange}
+                                required
+                                placeholder="Nombre del responsable"
+                            />
+                        </div>
+
+                        <div className="form-group form-full-width">
+                            <label className="form-label">Descripción (Opcional)</label>
+                            <textarea
+                                name="description"
+                                className="form-textarea"
+                                rows="3"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                placeholder="Detalles del producto..."
+                            ></textarea>
+                        </div>
+
+                        <div className="form-group form-full-width">
+                            <label className="form-label">Imagen del Producto</label>
+                            <input
+                                type="file"
+                                id="imageInput"
+                                className="form-input"
+                                onChange={handleImageChange}
+                                accept="image/*"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-full-width">
+                            <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem' }}>
+                                Agregar Producto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                {/* Product List Section */}
+                <div>
+                    <h3 className="admin-list-title">Inventario ({products.length})</h3>
+                    {products.length === 0 ? (
+                        <p style={{ textAlign: 'center', color: '#666', padding: '2rem' }}>No hay productos cargados todavía.</p>
+                    ) : (
+                        <div className="admin-products-grid">
+                            {products.map(product => (
+                                <div key={product.id} className="admin-product-card">
+                                    <img
+                                        src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/300'}
+                                        alt={product.type || product.name}
+                                        className="admin-product-image"
+                                    />
+                                    <div className="admin-product-info">
+                                        <h4 className="admin-product-name">{product.type || product.name} #{product.id}</h4>
+                                        <p className="admin-product-price">${product.price.toFixed(2)}</p>
+                                        {product.uploadedBy && (
+                                            <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
+                                                Por: {product.uploadedBy}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="admin-product-actions">
+                                        <button
+                                            onClick={() => handleDelete(product.id)}
+                                            className="btn-delete"
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('isAdmin');
-        navigate('/login');
-    };
-
-    return (
-        <div className="admin-container">
-            <div className="admin-header">
-                <h1 className="admin-title">Panel de Administración</h1>
-            </div>
-
-            {/* Add Product Form Section */}
-            <div className="admin-form-card">
-                <h3 className="admin-form-title">Agregar Nuevo Producto</h3>
-                <form onSubmit={handleSubmit} className="admin-form">
-                    <div className="form-group">
-                        <label className="form-label">Tipo de Producto</label>
-                        <input
-                            type="text"
-                            name="type"
-                            className="form-input"
-                            value={formData.type}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Ej: Collar, Anillo, Pulsera"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="form-label">Precio</label>
-                        <input
-                            type="number"
-                            name="price"
-                            className="form-input"
-                            value={formData.price}
-                            onChange={handleInputChange}
-                            required
-                            step="0.01"
-                            placeholder="0.00"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="form-label">Cargado Por</label>
-                        <input
-                            type="text"
-                            name="uploadedBy"
-                            className="form-input"
-                            value={formData.uploadedBy}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Nombre del responsable"
-                        />
-                    </div>
-
-                    <div className="form-group form-full-width">
-                        <label className="form-label">Descripción (Opcional)</label>
-                        <textarea
-                            name="description"
-                            className="form-textarea"
-                            rows="3"
-                            value={formData.description}
-                            onChange={handleInputChange}
-                            placeholder="Detalles del producto..."
-                        ></textarea>
-                    </div>
-
-                    <div className="form-group form-full-width">
-                        <label className="form-label">Imagen del Producto</label>
-                        <input
-                            type="file"
-                            id="imageInput"
-                            className="form-input"
-                            onChange={handleImageChange}
-                            accept="image/*"
-                            required
-                        />
-                    </div>
-
-                    <div className="form-full-width">
-                        <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem' }}>
-                            Agregar Producto
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            {/* Product List Section */}
-            <div>
-                <h3 className="admin-list-title">Inventario ({products.length})</h3>
-                {products.length === 0 ? (
-                    <p style={{ textAlign: 'center', color: '#666', padding: '2rem' }}>No hay productos cargados todavía.</p>
-                ) : (
-                    <div className="admin-products-grid">
-                        {products.map(product => (
-                            <div key={product.id} className="admin-product-card">
-                                <img
-                                    src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/300'}
-                                    alt={product.type || product.name}
-                                    className="admin-product-image"
-                                />
-                                <div className="admin-product-info">
-                                    <h4 className="admin-product-name">{product.type || product.name} #{product.id}</h4>
-                                    <p className="admin-product-price">${product.price.toFixed(2)}</p>
-                                    {product.uploadedBy && (
-                                        <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
-                                            Por: {product.uploadedBy}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="admin-product-actions">
-                                    <button
-                                        onClick={() => handleDelete(product.id)}
-                                        className="btn-delete"
-                                    >
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-};
-
-export default Admin;
+    export default Admin;
