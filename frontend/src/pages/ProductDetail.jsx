@@ -32,7 +32,7 @@ const ProductDetail = () => {
 
     return (
         <div className="product-detail-container">
-            <Link to="/" className="btn btn-outline btn-back">&larr; Volver al Catálogo</Link>
+            <Link to="/" className="btn btn-outline btn-back">&larr; Catálogo</Link>
 
             <div className="product-detail-content">
                 <div className="product-detail-image-wrapper">
