@@ -27,7 +27,7 @@ const Admin = () => {
 
     const fetchProducts = () => {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        fetch(`${apiUrl}/api/products?page=${page}&limit=10`)
+        fetch(`${apiUrl}/api/products?page=${page}&limit=9`)
             .then(res => res.json())
             .then(data => {
                 if (data.products && Array.isArray(data.products)) {
@@ -208,34 +208,59 @@ const Admin = () => {
                 {products.length === 0 ? (
                     <p style={{ textAlign: 'center', color: '#666', padding: '2rem' }}>No hay productos cargados todavía.</p>
                 ) : (
-                    <div className="admin-products-grid">
-                        {products.map(product => (
-                            <div key={product.id} className="admin-product-card">
-                                <img
-                                    src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/300'}
-                                    alt={product.type || product.name}
-                                    className="admin-product-image"
-                                />
-                                <div className="admin-product-info">
-                                    <h4 className="admin-product-name">{product.type || product.name} #{product.numericId || product.id}</h4>
-                                    <p className="admin-product-price">$ {product.price.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
-                                    {product.uploadedBy && (
-                                        <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
-                                            Por: {product.uploadedBy}
-                                        </p>
-                                    )}
+                    <>
+                        <div className="admin-products-grid">
+                            {products.map(product => (
+                                <div key={product.id} className="admin-product-card">
+                                    <img
+                                        src={product.image ? (product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${product.image}`) : 'https://via.placeholder.com/300'}
+                                        alt={product.type || product.name}
+                                        className="admin-product-image"
+                                    />
+                                    <div className="admin-product-info">
+                                        <h4 className="admin-product-name">{product.type || product.name} #{product.numericId || product.id}</h4>
+                                        <p className="admin-product-price">$ {product.price.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
+                                        {product.uploadedBy && (
+                                            <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
+                                                Por: {product.uploadedBy}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="admin-product-actions">
+                                        <button
+                                            onClick={() => handleDelete(product.id)}
+                                            className="btn-delete"
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="admin-product-actions">
-                                    <button
-                                        onClick={() => handleDelete(product.id)}
-                                        className="btn-delete"
-                                    >
-                                        Eliminar
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+
+                        {/* Pagination Controls */}
+                        <div className="pagination-controls" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '2rem', paddingBottom: '2rem' }}>
+                            <button
+                                onClick={handlePrevPage}
+                                disabled={page === 1}
+                                className="btn btn-secondary"
+                                style={{ opacity: page === 1 ? 0.5 : 1 }}
+                            >
+                                Anterior
+                            </button>
+                            <span style={{ alignSelf: 'center', fontWeight: 'bold' }}>
+                                Página {page} de {totalPages}
+                            </span>
+                            <button
+                                onClick={handleNextPage}
+                                disabled={page === totalPages}
+                                className="btn btn-secondary"
+                                style={{ opacity: page === totalPages ? 0.5 : 1 }}
+                            >
+                                Siguiente
+                            </button>
+                        </div>
+                    </>
                 )}
             </div>
         </div>
