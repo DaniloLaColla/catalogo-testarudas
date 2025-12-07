@@ -5,11 +5,22 @@ const multer = require('multer');
 const { upload } = require('../utils/cloudinary');
 const Product = require('../models/Product');
 
-// GET all products
+// GET all products with pagination
 router.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const totalProducts = await Product.countDocuments();
+    const products = await Product.find().skip(skip).limit(limit);
+
+    res.json({
+      products,
+      currentPage: page,
+      totalPages: Math.ceil(totalProducts / limit),
+      totalProducts
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -28,10 +28,12 @@ const Admin = () => {
         fetch(`${apiUrl}/api/products`)
             .then(res => res.json())
             .then(data => {
-                if (Array.isArray(data)) {
+                if (data.products && Array.isArray(data.products)) {
+                    setProducts(data.products);
+                } else if (Array.isArray(data)) {
                     setProducts(data);
                 } else {
-                    console.error('API returned non-array:', data);
+                    console.error('API returned unexpected format:', data);
                     setProducts([]);
                 }
             })

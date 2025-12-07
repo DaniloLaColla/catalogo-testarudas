@@ -128,6 +128,17 @@ img {
   color: var(--color-white);
 }
 
+.btn-secondary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-secondary:hover {
+  background-color: #152b6b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(28, 57, 142, 0.3);
+}
+
 .grid {
   display: grid;
   gap: var(--spacing-md);
