@@ -7,6 +7,7 @@ const Admin = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalProducts, setTotalProducts] = useState(0);
     const [formData, setFormData] = useState({
         type: '',
         description: '',
@@ -33,8 +34,10 @@ const Admin = () => {
                 if (data.products && Array.isArray(data.products)) {
                     setProducts(data.products);
                     setTotalPages(data.totalPages);
+                    setTotalProducts(data.totalProducts);
                 } else if (Array.isArray(data)) {
                     setProducts(data);
+                    setTotalProducts(data.length);
                 } else {
                     console.error('API returned unexpected format:', data);
                     setProducts([]);
@@ -204,7 +207,7 @@ const Admin = () => {
 
             {/* Product List Section */}
             <div>
-                <h3 className="admin-list-title">Inventario ({products.length})</h3>
+                <h3 className="admin-list-title">Inventario ({totalProducts})</h3>
                 {products.length === 0 ? (
                     <p style={{ textAlign: 'center', color: '#666', padding: '2rem' }}>No hay productos cargados todavía.</p>
                 ) : (
