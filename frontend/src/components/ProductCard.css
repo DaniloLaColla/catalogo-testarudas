@@ -44,7 +44,7 @@
 .product-name {
     font-size: 1.25rem;
     margin-bottom: var(--spacing-xs);
-    color: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .product-price {
