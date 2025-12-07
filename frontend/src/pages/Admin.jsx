@@ -207,7 +207,7 @@ const Admin = () => {
                                 />
                                 <div className="admin-product-info">
                                     <h4 className="admin-product-name">{product.type || product.name} #{product.numericId || product.id}</h4>
-                                    <p className="admin-product-price">${product.price.toFixed(2)}</p>
+                                    <p className="admin-product-price">$ {product.price.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
                                     {product.uploadedBy && (
                                         <p style={{ fontSize: '0.8rem', color: '#999', marginTop: '0.5rem' }}>
                                             Por: {product.uploadedBy}
