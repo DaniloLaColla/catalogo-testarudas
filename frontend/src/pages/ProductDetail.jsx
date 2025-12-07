@@ -46,7 +46,7 @@ const ProductDetail = () => {
                 <div className="product-detail-info">
                     <h1 className="product-detail-title">{product.type || product.name}</h1>
                     <p className="product-detail-price">
-                        ${product.price.toFixed(2)}
+                        $ {product.price.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </p>
                     <div className="product-detail-description-card">
                         <h3 className="product-detail-description-title">Descripción</h3>
