@@ -5,6 +5,8 @@ import './Admin.css';
 const Admin = () => {
     const [products, setProducts] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [formData, setFormData] = useState({
         type: '',
         description: '',
@@ -21,15 +23,16 @@ const Admin = () => {
             return;
         }
         fetchProducts();
-    }, [navigate]);
+    }, [navigate, page]);
 
     const fetchProducts = () => {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        fetch(`${apiUrl}/api/products`)
+        fetch(`${apiUrl}/api/products?page=${page}&limit=10`)
             .then(res => res.json())
             .then(data => {
                 if (data.products && Array.isArray(data.products)) {
                     setProducts(data.products);
+                    setTotalPages(data.totalPages);
                 } else if (Array.isArray(data)) {
                     setProducts(data);
                 } else {
@@ -38,6 +41,14 @@ const Admin = () => {
                 }
             })
             .catch(err => console.error(err));
+    };
+
+    const handlePrevPage = () => {
+        if (page > 1) setPage(prev => prev - 1);
+    };
+
+    const handleNextPage = () => {
+        if (page < totalPages) setPage(prev => prev + 1);
     };
 
     const handleInputChange = (e) => {
