@@ -32,7 +32,6 @@ const Navbar = () => {
                     <span className="bar"></span>
                 </div>
                 <ul className={`navbar-links ${isOpen ? 'active' : ''}`}>
-                    <li><Link to="/" onClick={toggleMenu}>Catálogo</Link></li>
                     {location.pathname === '/admin' && (
                         <li><button onClick={handleLogout} className="btn-link" style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer', color: 'var(--color-text)' }}>Cerrar Sesión</button></li>
                     )}
